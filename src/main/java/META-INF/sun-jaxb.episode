@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+  <!--
+
+Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.11 
+Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+Généré le : 2021.01.24 à 07:51:17 PM WET 
+
+  -->
+  <bindings xmlns:tns="http://app.com/cmi-service" if-exists="true" scd="x-schema::tns">
+    <schemaBindings map="false">
+      <package name="com.app.cmi.soap.api"/>
+    </schemaBindings>
+    <bindings if-exists="true" scd="tns:clientCreationRequest">
+      <class ref="com.app.cmi.soap.api.ClientCreationRequest"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:clientInfo">
+      <class ref="com.app.cmi.soap.api.ClientInfo"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:clientCreationResponse">
+      <class ref="com.app.cmi.soap.api.ClientCreationResponse"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:accountInfo">
+      <class ref="com.app.cmi.soap.api.AccountInfo"/>
+    </bindings>
+    <bindings if-exists="true" scd="~tns:agencyInfo">
+      <class ref="com.app.cmi.soap.api.AgencyInfo"/>
+    </bindings>
+  </bindings>
+</bindings>
