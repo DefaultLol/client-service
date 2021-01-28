@@ -28,7 +28,7 @@
                     <xsd:element name="email" type="xsd:string"/>
                     <xsd:element name="tel" type="xsd:string"/>
                     <xsd:element name="account" type="tns:accountInfo"/>
-                    <xsd:element name="agency" type="tns:agencyInfo"/>
+                    <xsd:element name="agent" type="tns:agentInfo"/>
                 </xsd:sequence>
             </xsd:complexType>
             <!-- account Info model  -->
@@ -47,6 +47,20 @@
                 <xsd:sequence>
                     <xsd:element name="id" type="xsd:string"/>
                     <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="address" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- agent Info model  -->
+            <xsd:complexType name="agentInfo">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:string"/>
+                    <xsd:element name="first_name" type="xsd:string"/>
+                    <xsd:element name="last_name" type="xsd:string"/>
+                    <xsd:element name="phone_number" type="xsd:string"/>
+                    <xsd:element name="patente_number" type="xsd:int"/>
+                    <xsd:element name="identity_number" type="xsd:int"/>
+                    <xsd:element name="email" type="xsd:string"/>
+                    <xsd:element name="agency" type="tns:agencyInfo"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>

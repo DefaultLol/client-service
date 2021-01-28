@@ -27,9 +27,9 @@ public class Client {
     private String tel;
     private Long userID;
     private String accountID;
-    private String agencyID;
+    private String agentID;
     @Transient
     private Account account;
     @Transient
-    private Agency agency;
+    private Agent agent;
 }

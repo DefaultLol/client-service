@@ -16,9 +16,9 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @PostMapping("/creationRequest")
-    public String creationRequest(@RequestBody Client client){
-        return clientService.creationRequest(client);
+    @PostMapping("/creationRequest/{tel}")
+    public String creationRequest(@RequestBody Client client,@PathVariable String tel){
+        return clientService.creationRequest(client,tel);
     }
 
     @PostMapping("/create")
@@ -34,5 +34,10 @@ public class ClientController {
     @GetMapping("/cmi/{tel}")
     public Client cmiChecker(@PathVariable String tel){
         return clientService.getClientCmi(tel);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteClient(@PathVariable String id){
+        clientService.deleteClient(id);
     }
 }

@@ -15,24 +15,23 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java pour clientInfo complex type.
+ * <p>Classe Java pour agentInfo complex type.
  * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  * 
  * <pre>
- * &lt;complexType name="clientInfo"&gt;
+ * &lt;complexType name="agentInfo"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="address" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="cin" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="first_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="last_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="phone_number" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="patente_number" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="identity_number" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="tel" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="account" type="{http://app.com/cmi-service}accountInfo"/&gt;
- *         &lt;element name="agent" type="{http://app.com/cmi-service}agentInfo"/&gt;
+ *         &lt;element name="agency" type="{http://app.com/cmi-service}agencyInfo"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -42,37 +41,34 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "clientInfo", propOrder = {
+@XmlType(name = "agentInfo", propOrder = {
     "id",
     "firstName",
     "lastName",
-    "address",
-    "cin",
+    "phoneNumber",
+    "patenteNumber",
+    "identityNumber",
     "email",
-    "tel",
-    "account",
-    "agent"
+    "agency"
 })
-public class ClientInfo {
+public class AgentInfo {
 
     @XmlElement(required = true)
     protected String id;
-    @XmlElement(required = true)
+    @XmlElement(name = "first_name", required = true)
     protected String firstName;
-    @XmlElement(required = true)
+    @XmlElement(name = "last_name", required = true)
     protected String lastName;
-    @XmlElement(required = true)
-    protected String address;
-    @XmlElement(required = true)
-    protected String cin;
+    @XmlElement(name = "phone_number", required = true)
+    protected String phoneNumber;
+    @XmlElement(name = "patente_number")
+    protected int patenteNumber;
+    @XmlElement(name = "identity_number")
+    protected int identityNumber;
     @XmlElement(required = true)
     protected String email;
     @XmlElement(required = true)
-    protected String tel;
-    @XmlElement(required = true)
-    protected AccountInfo account;
-    @XmlElement(required = true)
-    protected AgentInfo agent;
+    protected AgencyInfo agency;
 
     /**
      * Obtient la valeur de la propriété id.
@@ -147,51 +143,59 @@ public class ClientInfo {
     }
 
     /**
-     * Obtient la valeur de la propriété address.
+     * Obtient la valeur de la propriété phoneNumber.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAddress() {
-        return address;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     /**
-     * Définit la valeur de la propriété address.
+     * Définit la valeur de la propriété phoneNumber.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAddress(String value) {
-        this.address = value;
+    public void setPhoneNumber(String value) {
+        this.phoneNumber = value;
     }
 
     /**
-     * Obtient la valeur de la propriété cin.
+     * Obtient la valeur de la propriété patenteNumber.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getCin() {
-        return cin;
+    public int getPatenteNumber() {
+        return patenteNumber;
     }
 
     /**
-     * Définit la valeur de la propriété cin.
+     * Définit la valeur de la propriété patenteNumber.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setCin(String value) {
-        this.cin = value;
+    public void setPatenteNumber(int value) {
+        this.patenteNumber = value;
+    }
+
+    /**
+     * Obtient la valeur de la propriété identityNumber.
+     * 
+     */
+    public int getIdentityNumber() {
+        return identityNumber;
+    }
+
+    /**
+     * Définit la valeur de la propriété identityNumber.
+     * 
+     */
+    public void setIdentityNumber(int value) {
+        this.identityNumber = value;
     }
 
     /**
@@ -219,75 +223,27 @@ public class ClientInfo {
     }
 
     /**
-     * Obtient la valeur de la propriété tel.
+     * Obtient la valeur de la propriété agency.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link AgencyInfo }
      *     
      */
-    public String getTel() {
-        return tel;
+    public AgencyInfo getAgency() {
+        return agency;
     }
 
     /**
-     * Définit la valeur de la propriété tel.
+     * Définit la valeur de la propriété agency.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link AgencyInfo }
      *     
      */
-    public void setTel(String value) {
-        this.tel = value;
-    }
-
-    /**
-     * Obtient la valeur de la propriété account.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AccountInfo }
-     *     
-     */
-    public AccountInfo getAccount() {
-        return account;
-    }
-
-    /**
-     * Définit la valeur de la propriété account.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AccountInfo }
-     *     
-     */
-    public void setAccount(AccountInfo value) {
-        this.account = value;
-    }
-
-    /**
-     * Obtient la valeur de la propriété agent.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AgentInfo }
-     *     
-     */
-    public AgentInfo getAgent() {
-        return agent;
-    }
-
-    /**
-     * Définit la valeur de la propriété agent.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AgentInfo }
-     *     
-     */
-    public void setAgent(AgentInfo value) {
-        this.agent = value;
+    public void setAgency(AgencyInfo value) {
+        this.agency = value;
     }
 
 }

@@ -1,37 +1,37 @@
 package com.app.service;
 
 import com.app.cmi.soap.api.AccountInfo;
-import com.app.cmi.soap.api.AgencyInfo;
+import com.app.cmi.soap.api.AgentInfo;
 import com.app.cmi.soap.api.ClientInfo;
 import com.app.dao.ClientRepository;
-import com.app.entity.Account;
-import com.app.entity.Client;
+import com.app.entity.*;
 import com.app.exception.ClientNotFoundException;
 import com.app.utils.ClassExchanger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class ClientService {
     private static final String DATE_FORMAT="dd/MM/yy-HH:mm";
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private SoapCmiService soapCmiService;
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private ClassExchanger exchanger;
+    @Autowired private ClientRepository clientRepository;
+    @Autowired private SoapCmiService soapCmiService;
+    @Autowired private AccountService accountService;
+    @Autowired private AgentService agentService;
+    @Autowired private UserService userService;
+    @Autowired private ClassExchanger exchanger;
 
 
-    public String creationRequest(Client client){
-        AgencyInfo agencyInfo=exchanger.createAgencyInfo(client.getAgency());
+    public String creationRequest(Client client,String tel){
+        Agent agent=agentService.getAgentByTel(tel);
+        AgentInfo agentInfo=exchanger.createAgentInfo(agent);
         AccountInfo accountInfo=exchanger.createAccountInfo(client.getAccount());
-        ClientInfo clientInfo=exchanger.createClientInfo(client,accountInfo,agencyInfo);
+        ClientInfo clientInfo=exchanger.createClientInfo(client,accountInfo,agentInfo);
         return soapCmiService.createClientRequest(clientInfo);
     }
 
@@ -48,6 +48,17 @@ public class ClientService {
         //setting account info in client
         client.setAccount(account);
         client.setAccountID(account.getId());
+        //setting agent info in client
+        client.setAgent(client.getAgent());
+        client.setAgentID(client.getAgent().getId());
+        //create user
+        //String randomPassword = UUID.randomUUID().toString().replace("-","").substring(0,8);
+        List<Role> roles=new ArrayList<>();
+        roles.add(new Role(null,"ROLE_CLIENT","This is a client"));
+        User user=new User(null,client.getTel(),"123",roles);
+        User createdUser=userService.createUser(user);
+        client.setUserID(createdUser.getId());
+        //save client
         return clientRepository.save(client);
     }
 
@@ -59,5 +70,11 @@ public class ClientService {
 
     public Client getClientCmi(String tel){
         return clientRepository.findByTel(tel);
+    }
+
+    public void deleteClient(String id){
+        Client client=clientRepository.findById(id).orElseThrow(()->new ClientNotFoundException("Client with id : "+id+" not found"));
+        accountService.delete(client.getAccountID());
+        clientRepository.deleteById(id);
     }
 }
