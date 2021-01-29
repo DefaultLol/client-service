@@ -29,7 +29,7 @@ public class ClientService {
 
 
     public String creationRequest(Client client,String tel){
-        getClientByTel(client.getTel());
+        checkTelExist(client.getTel());
         Agent agent=agentService.getAgentByTel(tel);
 
         AgentInfo agentInfo=exchanger.createAgentInfo(agent);
