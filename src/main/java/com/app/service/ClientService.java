@@ -6,6 +6,7 @@ import com.app.cmi.soap.api.ClientInfo;
 import com.app.dao.ClientRepository;
 import com.app.entity.*;
 import com.app.exception.ClientNotFoundException;
+import com.app.exception.ClientAlreadyExistException;
 import com.app.utils.ClassExchanger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,24 @@ public class ClientService {
 
 
     public String creationRequest(Client client,String tel){
-        getClientByTel(tel);
+        getClientByTel(client.getTel());
         Agent agent=agentService.getAgentByTel(tel);
+
         AgentInfo agentInfo=exchanger.createAgentInfo(agent);
         AccountInfo accountInfo=exchanger.createAccountInfo(client.getAccount());
         ClientInfo clientInfo=exchanger.createClientInfo(client,accountInfo,agentInfo);
         return soapCmiService.createClientRequest(clientInfo);
+    }
+
+    public List<Client> getClientByAgent(String tel){
+        Agent agent=agentService.getAgentByTel(tel);
+        List<Client> clients=clientRepository.findByAgentID(agent.getId());
+        for(Client client:clients){
+            Account account=accountService.findAccount(client.getAccountID());
+            client.setAgent(agent);
+            client.setAccount(account);
+        }
+        return clients;
     }
 
     public Client createClient(Client client){
@@ -67,6 +80,11 @@ public class ClientService {
         Client client=clientRepository.findByTel(tel);
         if(client ==null) throw new ClientNotFoundException("Client with tel : "+tel+" doesn't exist");
         return client;
+    }
+
+    public void checkTelExist(String tel){
+        Client client=clientRepository.findByTel(tel);
+        if(client!=null) throw new ClientAlreadyExistException("Client with this tel already exist");
     }
 
     public Client getClientCmi(String tel){
