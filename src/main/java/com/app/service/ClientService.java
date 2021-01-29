@@ -39,8 +39,11 @@ public class ClientService {
     }
 
     public List<Client> getClientByAgent(String tel){
-        Agent agent=agentService.getAgentByTel(tel);
-        if(agent == null){
+        Agent agent;
+        try{
+            agent=agentService.getAgentByTel(tel);
+        }
+        catch(Exception exception){
             throw new ClientNotFoundException("Agent not found");
         }
         List<Client> clients=clientRepository.findByAgentID(agent.getId());
