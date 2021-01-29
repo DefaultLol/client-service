@@ -28,6 +28,7 @@ public class ClientService {
 
 
     public String creationRequest(Client client,String tel){
+        getClientByTel(tel);
         Agent agent=agentService.getAgentByTel(tel);
         AgentInfo agentInfo=exchanger.createAgentInfo(agent);
         AccountInfo accountInfo=exchanger.createAccountInfo(client.getAccount());
