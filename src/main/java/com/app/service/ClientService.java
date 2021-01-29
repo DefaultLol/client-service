@@ -38,14 +38,18 @@ public class ClientService {
         return soapCmiService.createClientRequest(clientInfo);
     }
 
-    public List<Client> getClientByAgent(String tel){
-        Agent agent;
+    public Agent getAgent(String tel){
         try{
-            agent=agentService.getAgentByTel(tel);
+            Agent agent=agentService.getAgentByTel(tel);
+            return agent;
         }
         catch(Exception exception){
             throw new ClientNotFoundException("Agent not found");
         }
+    }
+
+    public List<Client> getClientByAgent(String tel){
+        Agent agent=getAgent(tel);
         List<Client> clients=clientRepository.findByAgentID(agent.getId());
         for(Client client:clients){
             Account account=accountService.findAccount(client.getAccountID());

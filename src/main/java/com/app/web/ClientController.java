@@ -1,6 +1,7 @@
 package com.app.web;
 
 import com.app.dao.ClientRepository;
+import com.app.entity.Agent;
 import com.app.entity.Client;
 import com.app.exception.ClientAlreadyExistException;
 import com.app.service.ClientService;
@@ -26,6 +27,11 @@ public class ClientController {
     @GetMapping("/getByAgent/{tel}")
     public List<Client> getClientByAgent(@PathVariable String tel){
         return clientService.getClientByAgent(tel);
+    }
+
+    @GetMapping("/getAgent/{tel}")
+    public Agent getAgent(@PathVariable String tel){
+        return clientService.getAgent(tel);
     }
 
     @PostMapping("/creationRequest/{tel}")
