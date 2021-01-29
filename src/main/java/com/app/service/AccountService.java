@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "account-service",url = "http://localhost:8082/api/account")
+@FeignClient(name = "account-service",url = "https://ensaspay-account-service.herokuapp.com/api/account")
 public interface AccountService {
 
     @PostMapping("/save")
