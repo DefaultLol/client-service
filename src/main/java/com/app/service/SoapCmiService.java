@@ -19,7 +19,7 @@ public class SoapCmiService {
         ClientCreationRequest request=new ClientCreationRequest();
         request.setClientInfo(clientInfo);
         template=new WebServiceTemplate(marshaller);
-        ClientCreationResponse response= (ClientCreationResponse) template.marshalSendAndReceive("http://localhost:8088/soapWS",request);
+        ClientCreationResponse response= (ClientCreationResponse) template.marshalSendAndReceive("http://ensapay-cmi-service.herokuapp.com/soapWS",request);
         return response.getResponse();
     }
 }

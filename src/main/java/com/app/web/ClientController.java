@@ -16,6 +16,11 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @GetMapping("/")
+    public String getMessage(){
+        return "testing";
+    }
+
     @PostMapping("/creationRequest/{tel}")
     public String creationRequest(@RequestBody Client client,@PathVariable String tel){
         return clientService.creationRequest(client,tel);
