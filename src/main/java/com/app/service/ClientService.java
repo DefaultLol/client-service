@@ -60,6 +60,7 @@ public class ClientService {
     }
 
     public Client createClient(Client client){
+        checkTelExist(client.getTel());
         //generate fields for the account and setting them
         SimpleDateFormat format=new SimpleDateFormat();
         String accountNumber = UUID.randomUUID().toString().replace("-","");
