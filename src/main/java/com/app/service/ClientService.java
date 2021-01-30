@@ -7,6 +7,7 @@ import com.app.dao.ClientRepository;
 import com.app.entity.*;
 import com.app.exception.ClientNotFoundException;
 import com.app.exception.ClientAlreadyExistException;
+import com.app.exception.ErrorWhileDeletingException;
 import com.app.utils.ClassExchanger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,7 +105,12 @@ public class ClientService {
 
     public void deleteClient(String id){
         Client client=clientRepository.findById(id).orElseThrow(()->new ClientNotFoundException("Client with id : "+id+" not found"));
-        accountService.delete(client.getAccountID());
-        clientRepository.deleteById(id);
+        try{
+            userService.deleteUser(client.getUserID());
+            accountService.delete(client.getAccountID());
+            clientRepository.deleteById(id);
+        }catch(Exception e){
+            throw new ErrorWhileDeletingException("Error while deleting client");
+        }
     }
 }
