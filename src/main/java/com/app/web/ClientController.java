@@ -4,6 +4,7 @@ import com.app.dao.ClientRepository;
 import com.app.entity.Agent;
 import com.app.entity.Client;
 import com.app.exception.ClientAlreadyExistException;
+import com.app.service.AccountService;
 import com.app.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,12 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private AccountService accountService;
+
     @GetMapping("/")
     public String getMessage(){
-        return "testing";
+        return accountService.test();
     }
 
     @GetMapping("/getByAgent/{tel}")

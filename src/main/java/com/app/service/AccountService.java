@@ -13,6 +13,9 @@ public interface AccountService {
     @GetMapping("/{id}")
     public Account findAccount(@PathVariable String id);
 
+    @GetMapping("/testing")
+    public String test();
+
     @DeleteMapping("/{id}")
     public String delete(@PathVariable String id);
 }
