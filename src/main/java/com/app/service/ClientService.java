@@ -47,7 +47,7 @@ public class ClientService {
             return soapCmiService.createClientRequest(clientInfo,token);
         }
         catch(Exception e){
-            throw new ClientNotFoundException("error soap");
+            System.out.println(e.getMessage());
         }
     }
 
