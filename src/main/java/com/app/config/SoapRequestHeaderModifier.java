@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.saaj.SaajSoapMessage;
+import org.springframework.ws.transport.HeadersAwareSenderWebServiceConnection;
+import org.springframework.ws.transport.context.TransportContext;
+import org.springframework.ws.transport.context.TransportContextHolder;
 
 import javax.xml.soap.MimeHeaders;
 import javax.xml.transform.TransformerException;
@@ -15,11 +18,14 @@ public class SoapRequestHeaderModifier implements WebServiceMessageCallback {
     private AuthService authService;
 
     @Override
-    public void doWithMessage(WebServiceMessage message) {
-        if (message instanceof SaajSoapMessage) {
+    public void doWithMessage(WebServiceMessage message) throws IOException {
+        /*if (message instanceof SaajSoapMessage) {
             SaajSoapMessage soapMessage = (SaajSoapMessage) message;
             MimeHeaders mimeHeader = soapMessage.getSaajMessage().getMimeHeaders();
             mimeHeader.setHeader("Authorization", "Bearer "+authService.getAccessToken());
-        }
+        }*/
+        TransportContext context = TransportContextHolder.getTransportContext();
+        HeadersAwareSenderWebServiceConnection connection = (HeadersAwareSenderWebServiceConnection) context.getConnection();
+        connection.addRequestHeader("Authorization", String.format("Bearer %s", authService.getAccessToken()));
     }
 }
