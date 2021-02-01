@@ -21,11 +21,11 @@ public class SoapCmiService {
     private WebServiceTemplate template;
 
 
-    public String createClientRequest(ClientInfo clientInfo){
+    public String createClientRequest(ClientInfo clientInfo,String token){
         ClientCreationRequest request=new ClientCreationRequest();
         request.setClientInfo(clientInfo);
         template=new WebServiceTemplate(marshaller);
-        ClientCreationResponse response= (ClientCreationResponse) template.marshalSendAndReceive(url+"soapWS",request,new SoapRequestHeaderModifier());
+        ClientCreationResponse response= (ClientCreationResponse) template.marshalSendAndReceive(url+"soapWS",request,new SoapRequestHeaderModifier(token));
         return response.getResponse();
     }
 }

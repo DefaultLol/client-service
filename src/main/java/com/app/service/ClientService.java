@@ -38,7 +38,7 @@ public class ClientService {
         AgentInfo agentInfo=exchanger.createAgentInfo(agent);
         AccountInfo accountInfo=exchanger.createAccountInfo(client.getAccount());
         ClientInfo clientInfo=exchanger.createClientInfo(client,accountInfo,agentInfo);
-        return soapCmiService.createClientRequest(clientInfo);
+        return soapCmiService.createClientRequest(clientInfo,token);
     }
 
     public Agent getAgent(String tel){

@@ -14,9 +14,10 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 public class SoapRequestHeaderModifier implements WebServiceMessageCallback {
-    @Autowired
-    private AuthService authService;
-
+    private String token;
+    public SoapRequestHeaderModifier(String token){
+        this.token=token;
+    }
     @Override
     public void doWithMessage(WebServiceMessage message) throws IOException {
         /*if (message instanceof SaajSoapMessage) {
@@ -26,6 +27,6 @@ public class SoapRequestHeaderModifier implements WebServiceMessageCallback {
         }*/
         TransportContext context = TransportContextHolder.getTransportContext();
         HeadersAwareSenderWebServiceConnection connection = (HeadersAwareSenderWebServiceConnection) context.getConnection();
-        connection.addRequestHeader("Authorization", String.format("Bearer %s", authService.getAccessToken()));
+        connection.addRequestHeader("Authorization", String.format("Bearer %s", token));
     }
 }
