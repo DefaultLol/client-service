@@ -25,7 +25,7 @@ public class SoapCmiService {
         ClientCreationRequest request=new ClientCreationRequest();
         request.setClientInfo(clientInfo);
         template=new WebServiceTemplate(marshaller);
-        ClientCreationResponse response= (ClientCreationResponse) template.marshalSendAndReceive(url+"soapWS",request,new SoapRequestHeaderModifier());
+        ClientCreationResponse response= (ClientCreationResponse) template.marshalSendAndReceive(url+"soapWS",request);
         return response.getResponse();
     }
 }
