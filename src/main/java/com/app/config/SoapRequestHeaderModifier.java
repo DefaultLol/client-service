@@ -19,7 +19,7 @@ public class SoapRequestHeaderModifier implements WebServiceMessageCallback {
         if (message instanceof SaajSoapMessage) {
             SaajSoapMessage soapMessage = (SaajSoapMessage) message;
             MimeHeaders mimeHeader = soapMessage.getSaajMessage().getMimeHeaders();
-            mimeHeader.setHeader("Authorization", authService.getAccessToken());
+            mimeHeader.setHeader("Authorization", "Bearer "+authService.getAccessToken());
         }
     }
 }
