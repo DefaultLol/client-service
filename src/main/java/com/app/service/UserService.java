@@ -5,12 +5,12 @@ import com.app.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "user-service",url = "https://ensaspay-oauth-service.herokuapp.com/oauth/api/user")
+@FeignClient(name = "user-service",url = "https://ensaspay-zuul-gateway.herokuapp.com/oauth/api/user")
 public interface UserService {
 
     @PostMapping("/create")
-    public User createUser(@RequestBody User user);
+    public User createUser(@RequestHeader("Authorization") String token,@RequestBody User user);
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id);
+    public String deleteUser(@RequestHeader("Authorization") String token,@PathVariable Long id);
 }

@@ -53,10 +53,11 @@ public class ClientService {
     }
 
     public List<Client> getClientByAgent(String tel){
+        String token="Bearer "+authService.getAccessToken();
         Agent agent=getAgent(tel);
         List<Client> clients=clientRepository.findByAgentID(agent.getId());
         for(Client client:clients){
-            Account account=accountService.findAccount(client.getAccountID());
+            Account account=accountService.findAccount(token,client.getAccountID());
             client.setAgent(agent);
             client.setAccount(account);
         }
@@ -64,6 +65,7 @@ public class ClientService {
     }
 
     public Client createClient(Client client){
+        String token="Bearer "+authService.getAccessToken();
         checkTelExist(client.getTel());
         //generate fields for the account and setting them
         SimpleDateFormat format=new SimpleDateFormat();
@@ -73,7 +75,7 @@ public class ClientService {
         client.getAccount().setCreationDate(creationDate);
         client.getAccount().setStrCreationDate(format.format(creationDate));
         //save account in account-service
-        Account account=accountService.save(client.getAccount());
+        Account account=accountService.save(token,client.getAccount());
         //setting account info in client
         client.setAccount(account);
         client.setAccountID(account.getId());
@@ -85,7 +87,7 @@ public class ClientService {
         List<Role> roles=new ArrayList<>();
         roles.add(new Role(null,"ROLE_CLIENT","This is a client"));
         User user=new User(null,client.getTel(),"123",roles);
-        User createdUser=userService.createUser(user);
+        User createdUser=userService.createUser(token,user);
         client.setUserID(createdUser.getId());
         //save client
         return clientRepository.save(client);
@@ -109,8 +111,9 @@ public class ClientService {
     public void deleteClient(String id){
         Client client=clientRepository.findById(id).orElseThrow(()->new ClientNotFoundException("Client with id : "+id+" not found"));
         try{
-            userService.deleteUser(client.getUserID());
-            accountService.delete(client.getAccountID());
+            String token="Bearer "+authService.getAccessToken();
+            userService.deleteUser(token,client.getUserID());
+            accountService.delete(token,client.getAccountID());
             clientRepository.deleteById(id);
         }catch(Exception e){
             throw new ErrorWhileDeletingException("Error while deleting client");
