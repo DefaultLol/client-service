@@ -31,9 +31,9 @@ public class SoapCmiServiceTest {
         ClientCreationResponse response=new ClientCreationResponse();
         response.setResponse("Request will be processed");
 
-        when(soapCmiService.createClientRequest(clientInfo)).thenReturn(response.getResponse());
+        when(soapCmiService.createClientRequest(clientInfo,"")).thenReturn(response.getResponse());
 
-        String finalResponse=soapCmiService.createClientRequest(clientInfo);
+        String finalResponse=soapCmiService.createClientRequest(clientInfo,"");
 
         assertEquals(response.getResponse(),finalResponse);
     }

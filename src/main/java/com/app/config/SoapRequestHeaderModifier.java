@@ -1,16 +1,11 @@
 package com.app.config;
 
-import com.app.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
-import org.springframework.ws.soap.saaj.SaajSoapMessage;
 import org.springframework.ws.transport.HeadersAwareSenderWebServiceConnection;
 import org.springframework.ws.transport.context.TransportContext;
 import org.springframework.ws.transport.context.TransportContextHolder;
 
-import javax.xml.soap.MimeHeaders;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 public class SoapRequestHeaderModifier implements WebServiceMessageCallback {

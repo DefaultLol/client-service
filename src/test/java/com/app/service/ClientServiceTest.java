@@ -71,12 +71,12 @@ public class ClientServiceTest {
         when(classExchanger.createAccountInfo(account)).thenReturn(accountInfo);
         //when(classExchanger.createClientInfo(client,accountInfo,agencyInfo)).thenReturn(clientInfo);
         String response="Request will ve reviewed";
-        when(soapCmiService.createClientRequest(clientInfo)).thenReturn(response);
+        when(soapCmiService.createClientRequest(clientInfo,"")).thenReturn(response);
         //String expected=clientService.creationRequest(client);
 
         //assertEquals(response,expected);
 
-        verify(soapCmiService).createClientRequest(clientInfo);
+        verify(soapCmiService).createClientRequest(clientInfo,"");
     }
 
     @Test
