@@ -31,14 +31,24 @@ public class ClientService {
 
 
     public String creationRequest(Client client,String tel){
-        String token="Bearer "+authService.getAccessToken();
+        String token;
+        try{
+            token="Bearer "+authService.getAccessToken();
+        }catch(Exception e){
+            throw new ClientNotFoundException("naani");
+        }
         checkTelExist(client.getTel());
         Agent agent=agentService.getAgentByTel(token,tel);
 
         AgentInfo agentInfo=exchanger.createAgentInfo(agent);
         AccountInfo accountInfo=exchanger.createAccountInfo(client.getAccount());
         ClientInfo clientInfo=exchanger.createClientInfo(client,accountInfo,agentInfo);
-        return soapCmiService.createClientRequest(clientInfo,token);
+        try{
+            return soapCmiService.createClientRequest(clientInfo,token);
+        }
+        catch(Exception e){
+            throw new ClientNotFoundException("error soap");
+        }
     }
 
     public Agent getAgent(String tel){
