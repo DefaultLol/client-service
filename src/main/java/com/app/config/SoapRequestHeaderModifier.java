@@ -22,6 +22,6 @@ public class SoapRequestHeaderModifier implements WebServiceMessageCallback {
         }*/
         TransportContext context = TransportContextHolder.getTransportContext();
         HeadersAwareSenderWebServiceConnection connection = (HeadersAwareSenderWebServiceConnection) context.getConnection();
-        connection.addRequestHeader("Authorization", String.format("Bearer %s", token));
+        connection.addRequestHeader("Authorization", token);
     }
 }
