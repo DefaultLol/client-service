@@ -27,11 +27,13 @@ public class ClientService {
     @Autowired private AgentService agentService;
     @Autowired private UserService userService;
     @Autowired private ClassExchanger exchanger;
+    @Autowired private AuthService authService;
 
 
     public String creationRequest(Client client,String tel){
+        String token="Bearer "+authService.getAccessToken();
         checkTelExist(client.getTel());
-        Agent agent=agentService.getAgentByTel(tel);
+        Agent agent=agentService.getAgentByTel(token,tel);
 
         AgentInfo agentInfo=exchanger.createAgentInfo(agent);
         AccountInfo accountInfo=exchanger.createAccountInfo(client.getAccount());
@@ -41,7 +43,8 @@ public class ClientService {
 
     public Agent getAgent(String tel){
         try{
-            Agent agent=agentService.getAgentByTel(tel);
+            String token="Bearer "+authService.getAccessToken();
+            Agent agent=agentService.getAgentByTel(token,tel);
             return agent;
         }
         catch(Exception exception){
