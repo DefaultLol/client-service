@@ -37,6 +37,7 @@ public class ClientService {
         }catch(Exception e){
             throw new ClientNotFoundException("naani");
         }
+        System.out.println("token : "+token);
         checkTelExist(client.getTel());
         Agent agent=agentService.getAgentByTel(token,tel);
 
