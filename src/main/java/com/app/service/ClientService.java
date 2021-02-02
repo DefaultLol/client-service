@@ -96,8 +96,8 @@ public class ClientService {
         client.setAgentID(client.getAgent().getId());
         //create user
         String randomPassword = UUID.randomUUID().toString().replace("-","").substring(0,8);
-        SmsRequest request=new SmsRequest("+212"+client.getTel(),randomPassword);
-        smsService.sendSms(request);
+        /*SmsRequest request=new SmsRequest("+212"+client.getTel(),randomPassword);
+        smsService.sendSms(request);*/
         List<Role> roles=new ArrayList<>();
         roles.add(new Role(null,"ROLE_CLIENT","This is a client"));
 
