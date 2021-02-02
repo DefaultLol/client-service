@@ -2,6 +2,7 @@ package com.app.service;
 
 import com.app.cmi.soap.api.AccountInfo;
 import com.app.cmi.soap.api.AgencyInfo;
+import com.app.cmi.soap.api.AgentInfo;
 import com.app.cmi.soap.api.ClientInfo;
 import com.app.dao.ClientRepository;
 import com.app.entity.*;
@@ -29,7 +30,9 @@ public class ClientServiceTest {
     @Mock private SoapCmiService soapCmiService;
     @Mock private AccountService accountService;
     @Mock private UserService userService;
+    @Mock private AgentService agentService;
     @Mock private ClassExchanger classExchanger;
+    @Mock private AuthService authService;
 
     @InjectMocks private ClientService clientService=new ClientService();
 
@@ -46,9 +49,11 @@ public class ClientServiceTest {
 
     @Test
     public void testCreationRequest(){
-        //set agency info
-        AgencyInfo agencyInfo=new AgencyInfo();
-        agencyInfo.setName("agency 1");
+        Agent agent=new Agent("159","agentName","agentLastName",
+                "123456789",1478,848,"root@gmail.com",null);
+        when(authService.getAccessToken()).thenReturn("token");
+        when(agentService.getAgentByTel("token","123456789")).thenReturn(agent);
+        AgentInfo agenInfo=classExchanger.createAgentInfo(agent);
         //set account info
         AccountInfo accountInfo=new AccountInfo();
         accountInfo.setAccountNumber("1789");
@@ -65,18 +70,16 @@ public class ClientServiceTest {
         clientInfo.setEmail("root@gmail.com");
         clientInfo.setTel("123456789");
         clientInfo.setAccount(accountInfo);
-        //clientInfo.setAgency(agencyInfo);
+        clientInfo.setAgent(agenInfo);
 
-        when(classExchanger.createAgencyInfo(agency)).thenReturn(agencyInfo);
+        when(classExchanger.createAgentInfo(agent)).thenReturn(agenInfo);
         when(classExchanger.createAccountInfo(account)).thenReturn(accountInfo);
         //when(classExchanger.createClientInfo(client,accountInfo,agencyInfo)).thenReturn(clientInfo);
         String response="Request will ve reviewed";
-        when(soapCmiService.createClientRequest(clientInfo,"")).thenReturn(response);
-        //String expected=clientService.creationRequest(client);
+        when(soapCmiService.createClientRequest(clientInfo,"token")).thenReturn(response);
+        String expected=clientService.creationRequest(client,"123456789");
 
-        //assertEquals(response,expected);
-
-        verify(soapCmiService).createClientRequest(clientInfo,"");
+        assertEquals(response,expected);
     }
 
     @Test

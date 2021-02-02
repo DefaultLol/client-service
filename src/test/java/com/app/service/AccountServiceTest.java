@@ -19,21 +19,23 @@ public class AccountServiceTest {
 
     @Test
     public void testSaveAccount(){
-        /*Account account=new Account(null,"1578",159.0,0.0,"14-7-2021",new Date(),"compte 3000");
-        when(accountService.save(account)).thenReturn(account);
-        Account expected=accountService.save(account);
+        String token="894f1-efe84-grg84";
+        Account account=new Account(null,"1578",159.0,0.0,"14-7-2021",new Date(),"compte 3000");
+        when(accountService.save(token,account)).thenReturn(account);
+        Account expected=accountService.save(token,account);
 
-        assertEquals(expected.getAccountNumber(),account.getAccountNumber());*/
+        assertEquals(expected.getAccountNumber(),account.getAccountNumber());
     }
 
     @Test
     public void testDeleteAccount(){
-        /*String id="159";
-        when(accountService.delete(id)).thenReturn("Account with id : "+id+" deleted successfully");
+        String token="894f1-efe84-grg84";
+        String id="159";
+        when(accountService.delete(token,id)).thenReturn("Account with id : "+id+" deleted successfully");
 
         String expected="Account with id : 159 deleted successfully";
-        String response=accountService.delete(id);
+        String response=accountService.delete(token,id);
         
-        assertEquals(expected,response);*/
+        assertEquals(expected,response);
     }
 }

@@ -24,6 +24,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InternalAuthenticationException.class)
+    public ResponseEntity<?> handleAuthenticationError(InternalAuthenticationException exception, WebRequest request){
+        ErrorDetails errorDetails=new ErrorDetails(new Date(),exception.getMessage(),request.getDescription(false));
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(ErrorWhileDeletingException.class)
     public ResponseEntity<?> errorWhileDeleting(ErrorWhileDeletingException exception, WebRequest request){
         ErrorDetails errorDetails=new ErrorDetails(new Date(),exception.getMessage(),request.getDescription(false));

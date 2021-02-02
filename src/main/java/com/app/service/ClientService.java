@@ -5,10 +5,9 @@ import com.app.cmi.soap.api.AgentInfo;
 import com.app.cmi.soap.api.ClientInfo;
 import com.app.dao.ClientRepository;
 import com.app.entity.*;
-import com.app.exception.ClientNotFoundException;
-import com.app.exception.ClientAlreadyExistException;
-import com.app.exception.ErrorWhileDeletingException;
-import com.app.exception.SoapConnectionServiceException;
+import com.app.exception.*;
+import com.app.twilio.SmsRequest;
+import com.app.twilio.SmsService;
 import com.app.utils.ClassExchanger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,7 @@ public class ClientService {
     @Autowired private UserService userService;
     @Autowired private ClassExchanger exchanger;
     @Autowired private AuthService authService;
+    @Autowired private SmsService smsService;
 
 
     public String creationRequest(Client client,String tel){
@@ -36,7 +36,7 @@ public class ClientService {
         try{
             token="Bearer "+authService.getAccessToken();
         }catch(Exception e){
-            throw new ClientNotFoundException("naani");
+            throw new InternalAuthenticationException("Error while authenticating");
         }
         System.out.println("token : "+token);
         checkTelExist(client.getTel());
@@ -95,9 +95,12 @@ public class ClientService {
         client.setAgent(client.getAgent());
         client.setAgentID(client.getAgent().getId());
         //create user
-        //String randomPassword = UUID.randomUUID().toString().replace("-","").substring(0,8);
+        String randomPassword = UUID.randomUUID().toString().replace("-","").substring(0,8);
+        SmsRequest request=new SmsRequest("+212"+client.getTel(),randomPassword);
+        smsService.sendSms(request);
         List<Role> roles=new ArrayList<>();
         roles.add(new Role(null,"ROLE_CLIENT","This is a client"));
+
         User user=new User(null,client.getTel(),"123",roles);
         User createdUser=userService.createUser(token,user);
         client.setUserID(createdUser.getId());
