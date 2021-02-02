@@ -8,6 +8,7 @@ import com.app.entity.*;
 import com.app.exception.ClientNotFoundException;
 import com.app.exception.ClientAlreadyExistException;
 import com.app.exception.ErrorWhileDeletingException;
+import com.app.exception.SoapConnectionServiceException;
 import com.app.utils.ClassExchanger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,7 @@ public class ClientService {
             return soapCmiService.createClientRequest(clientInfo,token);
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            throw new SoapConnectionServiceException("Can't connect to cmi service");
         }
     }
 
@@ -118,6 +118,14 @@ public class ClientService {
 
     public Client getClientCmi(String tel){
         return clientRepository.findByTel(tel);
+    }
+
+    public Client getClient(String tel){
+        Client client=clientRepository.findByTel(tel);
+        if(client!=null) throw new ClientAlreadyExistException("Client with this tel already exist");
+        Account account=accountService.findAccount("token",client.getAccountID());
+        client.setAccount(account);
+        return client;
     }
 
     public void deleteClient(String id){

@@ -53,6 +53,11 @@ public class ClientController {
         return clientService.getClientByTel(tel);
     }
 
+    @GetMapping("/getClient/{tel}")
+    public Client getClient(@PathVariable String tel){
+        return clientService.getClient(tel);
+    }
+
     @GetMapping("/cmi/{tel}")
     public Client cmiChecker(@PathVariable String tel){
         return clientService.getClientCmi(tel);
