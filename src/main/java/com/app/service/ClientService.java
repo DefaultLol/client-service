@@ -121,9 +121,10 @@ public class ClientService {
     }
 
     public Client getClient(String tel){
+        String token=authService.getAccessToken();
         Client client=clientRepository.findByTel(tel);
         if(client==null) throw new ClientNotFoundException("Client not found");
-        Account account=accountService.findAccount("token",client.getAccountID());
+        Account account=accountService.findAccount(token,client.getAccountID());
         client.setAccount(account);
         return client;
     }
