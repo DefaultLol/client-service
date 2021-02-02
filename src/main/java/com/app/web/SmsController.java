@@ -3,10 +3,7 @@ package com.app.web;
 import com.app.twilio.Service;
 import com.app.twilio.SmsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -21,8 +18,9 @@ public class SmsController {
         this.service = service;
     }
 
-    @PostMapping
-    public void sendSms(@Valid @RequestBody SmsRequest smsRequest) {
-        service.sendSms(smsRequest);
+    @GetMapping
+    public void sendSms() {
+        SmsRequest request=new SmsRequest("+212708042169","Hello from app");
+        service.sendSms(request);
     }
 }
