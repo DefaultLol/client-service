@@ -34,7 +34,6 @@ public class TwilioSmsSender implements SmsSender {
                     "Phone number [" + smsRequest.getPhoneNumber() + "] is not a valid number"
             );
         }
-
     }
 
     private boolean isPhoneNumberValid(String phoneNumber) {

@@ -104,7 +104,7 @@ public class ClientServiceTest {
         SmsRequest request=new SmsRequest("+212"+client.getTel(),"pass");
         when(authService.getAccessToken()).thenReturn("token");
         when(accountService.save("Bearer token",client.getAccount())).thenReturn(client.getAccount());
-        doNothing().when(smsService).sendSms(request);
+        //doNothing().when(smsService).sendSms(request);
         when(userService.createUser("Bearer token",user)).thenReturn(user);
         when(clientRepository.save(client)).thenReturn(client);
         Client response=clientService.createClient(client);
@@ -139,13 +139,14 @@ public class ClientServiceTest {
     public void testDeleteClient(){
         String id="157";
         Optional<Client> op=Optional.of(client);
+        when(authService.getAccessToken()).thenReturn("token");
         when(clientRepository.findById(id)).thenReturn(op);
-        when(accountService.delete("token",client.getAccountID())).thenReturn("Success");
+        when(accountService.delete("Bearer token",client.getAccountID())).thenReturn("Success");
         doNothing().when(clientRepository).deleteById(id);
 
         clientService.deleteClient(id);
 
-        verify(accountService).delete("token",client.getAccountID());
+        verify(accountService).delete("Bearer token",client.getAccountID());
         verify(clientRepository).deleteById(id);
     }
 

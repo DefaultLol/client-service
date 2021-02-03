@@ -64,9 +64,8 @@ public class ClientControllerTest {
 
     @Test
     public void testCreationRequest() throws Exception {
-
-        //when(clientService.creationRequest(client)).thenReturn("Request will be checked");
-        String url="/api/client/creationRequest";
+        when(clientService.creationRequest(client,"123456789")).thenReturn("Request will be checked");
+        String url="/api/client/creationRequest/123456789";
         MvcResult result=mockMvc.perform(post(url).contentType("application/json").content(objectMapper.writeValueAsString(client)))
                 .andExpect(status().isOk()).andReturn();
 

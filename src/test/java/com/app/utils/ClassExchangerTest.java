@@ -2,9 +2,11 @@ package com.app.utils;
 
 import com.app.cmi.soap.api.AccountInfo;
 import com.app.cmi.soap.api.AgencyInfo;
+import com.app.cmi.soap.api.AgentInfo;
 import com.app.cmi.soap.api.ClientInfo;
 import com.app.entity.Account;
 import com.app.entity.Agency;
+import com.app.entity.Agent;
 import com.app.entity.Client;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +37,22 @@ public class ClassExchangerTest {
         expected.setName("agency 1");
 
         assertEquals(expected.getName(),classExchanger.createAgencyInfo(agency).getName());
+    }
+
+    @Test
+    public void testAgentInfo(){
+        Agent agent=new Agent("123","oussama","chamlal","123456789",123,15,"root@gmail.com",new Agency());
+        AgentInfo expected=new AgentInfo();
+        expected.setId("123");
+        expected.setFirstName("oussama");
+        expected.setLastName("chamlal");
+        expected.setPhoneNumber("123456789");
+        expected.setPatenteNumber(123);
+        expected.setIdentityNumber(15);
+        expected.setEmail("root@gmail.com");
+        expected.setAgency(new AgencyInfo());
+
+        assertEquals(expected.getEmail(),classExchanger.createAgentInfo(agent).getEmail());
     }
 
     @Test
