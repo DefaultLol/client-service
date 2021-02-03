@@ -132,6 +132,10 @@ public class ClientService {
         return client;
     }
 
+    public Client updateClient(Client client){
+        return clientRepository.save(client);
+    }
+
     public void deleteClient(String id){
         Client client=clientRepository.findById(id).orElseThrow(()->new ClientNotFoundException("Client with id : "+id+" not found"));
         try{

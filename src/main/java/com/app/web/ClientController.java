@@ -63,8 +63,14 @@ public class ClientController {
         return clientService.getClientCmi(tel);
     }
 
+    @PutMapping("/{id}")
+    public Client updateClient(@RequestBody Client client){
+        return clientService.updateClient(client);
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteClient(@PathVariable String id){
+    public String deleteClient(@PathVariable String id){
         clientService.deleteClient(id);
+        return "Client with id : " + id +" deleted successfully";
     }
 }
