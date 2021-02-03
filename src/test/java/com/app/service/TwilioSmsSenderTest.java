@@ -21,7 +21,6 @@ public class TwilioSmsSenderTest {
 
     @Test(expected = NullPointerException.class)
     public void testSendingSmsError(){
-        when(twilioConfiguration.getTrialNumber()).thenReturn("84651");
         SmsRequest smsRequest=new SmsRequest();
         smsRequest.setPhoneNumber("8465");
         smsRequest.setMessage("Hello");

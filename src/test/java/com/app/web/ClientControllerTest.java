@@ -65,7 +65,7 @@ public class ClientControllerTest {
     @Test
     public void testCreationRequest() throws Exception {
         when(clientService.creationRequest(client,"123456789")).thenReturn("Request will be checked");
-        String url="/api/client/creationRequest/123456789";
+        String url="https://ensaspay-zuul-gateway.herokuapp.com/api/client/creationRequest/123456789";
         MvcResult result=mockMvc.perform(post(url).contentType("application/json").content(objectMapper.writeValueAsString(client)))
                 .andExpect(status().isOk()).andReturn();
 
@@ -77,7 +77,7 @@ public class ClientControllerTest {
     @Test
     public void testClientCreation() throws Exception {
         when(clientService.createClient(client)).thenReturn(client);
-        String url="/api/client/create";
+        String url="https://ensaspay-zuul-gateway.herokuapp.com/api/client/create";
         MvcResult result=mockMvc.perform(post(url).contentType("application/json").content(objectMapper.writeValueAsString(client)))
                 .andExpect(status().isOk()).andReturn();
 
@@ -92,7 +92,7 @@ public class ClientControllerTest {
 
         when(clientService.getClientByTel(tel)).thenReturn(client);
 
-        String url="/api/client/"+tel;
+        String url="https://ensaspay-zuul-gateway.herokuapp.com/api/client/"+tel;
         MvcResult result=mockMvc.perform(get(url)).andExpect(status().isOk()).andReturn();
 
         String response=result.getResponse().getContentAsString();
@@ -108,7 +108,7 @@ public class ClientControllerTest {
 
         when(clientService.getClientByTel(tel)).thenThrow(ClientNotFoundException.class);
 
-        String url="/api/client/"+tel;
+        String url="https://ensaspay-zuul-gateway.herokuapp.com/api/client/"+tel;
         mockMvc.perform(get(url)).andExpect(status().isNotFound());
     }
 
@@ -118,7 +118,7 @@ public class ClientControllerTest {
 
         when(clientService.getClientCmi(tel)).thenReturn(client);
 
-        String url="/api/client/cmi/"+tel;
+        String url="https://ensaspay-zuul-gateway.herokuapp.com/api/client/cmi/"+tel;
         MvcResult result=mockMvc.perform(get(url)).andExpect(status().isOk()).andReturn();
 
         String response=result.getResponse().getContentAsString();
