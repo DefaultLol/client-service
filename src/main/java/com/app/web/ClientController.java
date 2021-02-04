@@ -19,14 +19,11 @@ import java.util.List;
 @RequestMapping("api/client")
 public class ClientController {
 
-    @Autowired
-    private ClientService clientService;
+    @Autowired private ClientService clientService;
 
-    @Autowired
-    private AccountService accountService;
+    @Autowired private AccountService accountService;
 
-    @Autowired
-    private AuthService authService;
+    @Autowired private AuthService authService;
 
     @GetMapping("/")
     public String getMessage(){
@@ -38,7 +35,7 @@ public class ClientController {
         String token=authService.getAccessToken();
         return accountService.alimentationAccount(token,accountID,amount);
     }
-    
+
     @GetMapping("/getByAgent/{tel}")
     public List<Client> getClientByAgent(@PathVariable String tel){
         return clientService.getClientByAgent(tel);

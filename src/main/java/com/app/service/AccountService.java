@@ -17,7 +17,7 @@ public interface AccountService {
     public String test();
 
     @GetMapping("/alimentation/{accountID}/{amount}")
-    public Account alimentationAccount(@RequestHeader("Authorization") String token, String accountID ,double amount);
+    public Account alimentationAccount(@RequestHeader("Authorization") String token, @PathVariable String accountID ,@PathVariable double amount);
 
     @DeleteMapping("/{id}")
     public String delete(@RequestHeader("Authorization") String token,@PathVariable String id);
