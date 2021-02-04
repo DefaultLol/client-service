@@ -13,9 +13,6 @@ public interface AccountService {
     @GetMapping("/{id}")
     public Account findAccount(@RequestHeader("Authorization") String token, @PathVariable String id);
 
-    @GetMapping("/testing")
-    public String test();
-
     @GetMapping("/alimentation/{accountID}/{amount}")
     public Account alimentationAccount(@RequestHeader("Authorization") String token, @PathVariable String accountID ,@PathVariable double amount);
 

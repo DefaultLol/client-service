@@ -25,11 +25,6 @@ public class ClientController {
 
     @Autowired private AuthService authService;
 
-    @GetMapping("/")
-    public String getMessage(){
-        return accountService.test();
-    }
-
     @GetMapping("/alimentation/{accountID}/{amount}")
     public Account alimentationAccount(@PathVariable String accountID, @PathVariable double amount){
         String token=authService.getAccessToken();
