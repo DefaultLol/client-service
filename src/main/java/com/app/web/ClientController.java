@@ -1,10 +1,12 @@
 package com.app.web;
 
 import com.app.dao.ClientRepository;
+import com.app.entity.Account;
 import com.app.entity.Agent;
 import com.app.entity.Client;
 import com.app.exception.ClientAlreadyExistException;
 import com.app.service.AccountService;
+import com.app.service.AuthService;
 import com.app.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +25,20 @@ public class ClientController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AuthService authService;
+
     @GetMapping("/")
     public String getMessage(){
         return accountService.test();
     }
 
+    @GetMapping("/alimentation/{accountID}/{amount}")
+    public Account alimentationAccount(@PathVariable String accountID, @PathVariable double amount){
+        String token=authService.getAccessToken();
+        return accountService.alimentationAccount(token,accountID,amount);
+    }
+    
     @GetMapping("/getByAgent/{tel}")
     public List<Client> getClientByAgent(@PathVariable String tel){
         return clientService.getClientByAgent(tel);
