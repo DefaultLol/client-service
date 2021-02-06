@@ -95,13 +95,13 @@ public class ClientService {
         client.setAgent(client.getAgent());
         client.setAgentID(client.getAgent().getId());
         //create user
-        String randomPassword = UUID.randomUUID().toString().replace("-","").substring(0,8);
-        /*SmsRequest request=new SmsRequest("+212"+client.getTel(),randomPassword);
-        smsService.sendSms(request);*/
+        String randomPassword = UUID.randomUUID().toString().replace("-","").substring(0,3);
+        SmsRequest request=new SmsRequest("+212"+client.getTel(),randomPassword);
+        smsService.sendSms(request);
         List<Role> roles=new ArrayList<>();
         roles.add(new Role(null,"ROLE_CLIENT","This is a client"));
 
-        User user=new User(null,client.getTel(),"123",roles);
+        User user=new User(null,client.getTel(),randomPassword,roles);
         User createdUser=userService.createUser(token,user);
         client.setUserID(createdUser.getId());
         //save client
